@@ -1,19 +1,16 @@
-            import json
+import json
 import requests
 
-PRODUCT_URL = (
-    "https://shopeu.madonna.com/products/premium-cd-16-track.json"
-)
+PRODUCT_URL = "https://shopeu.madonna.com/products/premium-cd-16-track.json"
 TELEGRAM_TOKEN = "8468230379:AAF5Aan9RBe2f2MjnsUSf6KkR6Wet6VP9lI"
 TELEGRAM_CHAT_ID = "1285907094"
-
 
 def send_telegram_message(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     payload = {
         "chat_id": TELEGRAM_CHAT_ID,
         "text": message,
-        "parse_mode": "Markdown",
+        "parse_mode": "Markdown"
     }
     try:
         r = requests.post(url, json=payload, timeout=10)
@@ -21,14 +18,10 @@ def send_telegram_message(message):
     except Exception as e:
         print(f"Errore invio Telegram: {e}")
 
-
 def check_stock():
     headers = {
-        "User-Agent": (
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-            " (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
-        ),
-        "Accept": "application/json",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+        "Accept": "application/json"
     }
     try:
         response = requests.get(PRODUCT_URL, headers=headers, timeout=10)
@@ -48,27 +41,19 @@ def check_stock():
                 var_title = v.get("title", "Standard")
                 avail = v.get("available", False)
                 price = v.get("price", "0.00")
-                print(
-                    f"-> Variante: '{var_title}' | Available: {avail} | Prezzo:"
-                    f" {price}"
-                )
+                print(f"-> Variante: '{var_title}' | Available: {avail} | Prezzo: {price}")
                 if avail:
                     any_available = True
 
             if any_available:
                 print("ESITO: Almeno una variante risulta DISPONIBILE!")
-                send_telegram_message(
-                    f"🚨 *TEST DISPONIBILE!*\n\nProdotto: *{title}*"
-                )
+                send_telegram_message(f"🚨 *TEST DISPONIBILE!*\n\nProdotto: *{title}*")
             else:
                 print("ESITO: Tutte le varianti risultano NON DISPONIBILI nel JSON.")
         else:
-            print(
-                f"Errore: Il server risponde con status {response.status_code}"
-            )
+            print(f"Errore: Il server risponde con status {response.status_code}")
     except Exception as e:
         print(f"Errore di rete/connessione: {e}")
-
 
 if __name__ == "__main__":
     check_stock()
