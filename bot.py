@@ -1,7 +1,8 @@
 import requests
 
+# URL del CD (Disponibile) per fare il test
 PRODUCT_URL = (
-    "https://shopeu.madonna.com/products/luxe-expanded-2lpe-epink.json"
+    "https://shopeu.madonna.com/products/premium-cd-16-track.json"
 )
 TELEGRAM_TOKEN = "8468230379:AAF5Aan9RBe2f2MjnsUSf6KkR6Wet6VP9lI"
 TELEGRAM_CHAT_ID = "1285907094"
@@ -32,7 +33,7 @@ def check_stock():
         if response.status_code == 200:
             data = response.json()
             product = data.get("product", {})
-            title = product.get("title", "Luxe Expanded 2LP Pink")
+            title = product.get("title", "Premium CD 16-Track")
             variants = product.get("variants", [])
 
             is_available = any(
@@ -40,12 +41,12 @@ def check_stock():
             )
 
             if is_available:
-                link = "https://shopeu.madonna.com/products/luxe-expanded-2lpe-epink"
-                msg = f"🚨 *PRODOTTO DISPONIBILE!* 🚨\n\n*{title}* è tornato disponibile nello store!\n\nAcquista ora: {link}"
+                link = "https://shopeu.madonna.com/products/premium-cd-16-track"
+                msg = f"🚨 *TEST PRODOTTO DISPONIBILE!* 🚨\n\n*{title}* risulta disponibile nello store!\n\nLink: {link}"
                 send_telegram_message(msg)
-                print("DISPONIBILE! Notifica inviata.")
+                print("DISPONIBILE! Notifica inviata su Telegram.")
             else:
-                print("Prodotto ancora esaurito.")
+                print("Prodotto non disponibile.")
         else:
             print(f"Errore risposta server: {response.status_code}")
     except Exception as e:
