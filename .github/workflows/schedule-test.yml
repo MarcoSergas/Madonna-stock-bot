@@ -1,5 +1,7 @@
 name: Schedule Test
 
+# Resync scheduled workflow
+
 run-name: "Schedule Test - ${{ github.event_name }} - run ${{ github.run_number }}"
 
 on:
