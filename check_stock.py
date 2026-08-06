@@ -7,14 +7,19 @@ CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 # Inserisci qui tutti i prodotti che vuoi monitorare
 PRODUCTS = [
     {
-        "name": "Premium CD 16 Track",
-        "url": "https://shopeu.madonna.com/products/premium-cd-16-track.js",
-        "link": "https://shopeu.madonna.com/products/premium-cd-16-track"
+        "name": "Cassette",
+        "url": "https://shopeu.madonna.com/products/cassette.js",
+        "link": "https://shopeu.madonna.com/products/cassette"
     },
     {
         "name": "Deluxe 2LP Set",
-        "url": " https://shopeu.madonna.com/products/luxe-expanded-2lpe-epink.js",
-        "link": " https://shopeu.madonna.com/products/luxe-expanded-2lpe-epink"
+        "url": "https://shopeu.madonna.com/products/luxe-expanded-2lpe-epink.js",
+        "link": "https://shopeu.madonna.com/products/luxe-expanded-2lpe-epink"
+    },
+    {
+        "name": "LP Pride Edition",
+        "url": "https://shopeu.madonna.com/products/confessions-ii-d-12-track-vinyl-lp-pride-edition.js",
+        "link": "https://shopeu.madonna.com/products/confessions-ii-d-12-track-vinyl-lp-pride-edition"
     }
 ]
 
