@@ -1,42 +1,62 @@
 import os
 import requests
 
-URL = "https://shopeu.madonna.com/products/premium-cd-16-track.js"
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
+
+# Inserisci qui tutti i prodotti che vuoi monitorare
+PRODUCTS = [
+    {
+        "name": "Premium CD 16 Track",
+        "url": "https://shopeu.madonna.com/products/premium-cd-16-track.js",
+        "link": "https://shopeu.madonna.com/products/premium-cd-16-track"
+    },
+    {
+        "name": "Deluxe 2LP Set",
+        "url": " https://shopeu.madonna.com/products/luxe-expanded-2lpe-epink.js",
+        "link": " https://shopeu.madonna.com/products/luxe-expanded-2lpe-epink"
+    }
+]
+
+def send_telegram(msg):
+    telegram_url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+    response = requests.post(telegram_url, json={
+        "chat_id": CHAT_ID,
+        "text": msg,
+        "parse_mode": "Markdown"
+    })
+    
+    if response.status_code == 200:
+        print("Notifica Telegram inviata con successo!")
+    else:
+        print(f"Errore Telegram ({response.status_code}): {response.text}")
 
 def check_stock():
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     }
     
-    try:
-        response = requests.get(URL, headers=headers, timeout=10)
-        if response.status_code == 200:
-            data = response.json()
-            is_available = data.get("available", False)
-            
-            if is_available:
-                product_title = data.get("title", "Premium CD 16 Track")
-                msg = (
-                    f"🚨 **PRODOTTO DISPONIBILE!** 🚨\n\n"
-                    f"Il prodotto **{product_title}** è tornato disponibile su Madonna Store EU!\n\n"
-                    f"👉 Link acquisto: https://shopeu.madonna.com/products/premium-cd-16-track"
-                )
+    for item in PRODUCTS:
+        try:
+            response = requests.get(item["url"], headers=headers, timeout=10)
+            if response.status_code == 200:
+                data = response.json()
+                is_available = data.get("available", False)
                 
-                telegram_url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-                requests.post(telegram_url, json={
-                    "chat_id": CHAT_ID,
-                    "text": msg,
-                    "parse_mode": "Markdown"
-                })
-                print("Notifica inviata con successo su Telegram!")
+                if is_available:
+                    product_title = data.get("title", item["name"])
+                    msg = (
+                        f"🚨 **PRODOTTO DISPONIBILE!** 🚨\n\n"
+                        f"Il prodotto **{product_title}** è disponibile!\n\n"
+                        f"👉 Link acquisto: {item['link']}"
+                    )
+                    send_telegram(msg)
+                else:
+                    print(f"[{item['name']}] Prodotto ancora esaurito.")
             else:
-                print("Prodotto ancora esaurito.")
-        else:
-            print(f"Errore nella richiesta HTTP: Stato {response.status_code}")
-    except Exception as e:
-        print(f"Errore durante l'esecuzione: {e}")
+                print(f"[{item['name']}] Errore HTTP: Stato {response.status_code}")
+        except Exception as e:
+            print(f"[{item['name']}] Errore durante l'esecuzione: {e}")
 
 if __name__ == "__main__":
     check_stock()
