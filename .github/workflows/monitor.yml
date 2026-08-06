@@ -1,5 +1,7 @@
 name: Monitor Madonna Store Stock
 
+# Resync scheduled workflow
+
 on:
   push:
     branches:
