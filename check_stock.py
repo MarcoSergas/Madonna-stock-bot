@@ -20,6 +20,11 @@ PRODUCTS = [
         "name": "LP Pride Edition",
         "url": "https://shopeu.madonna.com/products/confessions-ii-d-12-track-vinyl-lp-pride-edition.js",
         "link": "https://shopeu.madonna.com/products/confessions-ii-d-12-track-vinyl-lp-pride-edition"
+    },
+    {
+        "name": "CD 16 tracce",
+        "url": "https://shopeu.madonna.com/products/standard-cd-16-track.js",
+        "link": "https://shopeu.madonna.com/products/standard-cd-16-track"
     }
 ]
 
