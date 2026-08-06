@@ -3,7 +3,7 @@ name: Monitor Madonna Store Stock
 on:
   schedule:
     # Controlla ogni 15 minuti (* /15 * * *)
-    - cron: '*/15 * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch: # Permette di avviare il controllo manualmente da GitHub
 
 jobs:
