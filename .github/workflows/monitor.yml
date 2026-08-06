@@ -6,7 +6,7 @@ on:
       - main
 
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '7,22,37,52 * * * *'
 
   workflow_dispatch:
 
@@ -15,4 +15,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo "Workflow avviato!"
+      - name: Mostra tipo di evento
+        run: |
+          echo "Tipo evento: ${{ github.event_name }}"
+          echo "Data e ora UTC:"
+          date -u
+
+      - name: Test
+        run: echo "Workflow avviato!"
