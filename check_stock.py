@@ -29,7 +29,11 @@ PRODUCTS = [
         "name": "CD 16 tracce",
         "url": "https://shopeu.madonna.com/products/standard-cd-16-track.js",
         "link": "https://shopeu.madonna.com/products/standard-cd-16-track"
-    }
+    },
+    {
+        "name": "Cassette",
+        "url": "https://www.groovespin.it/album/madonna-confessions-ii-4273809?releaseId=1099619.js",
+        "link": "https://www.groovespin.it/album/madonna-confessions-ii-4273809?releaseId=1099619"
 ]
 
 def send_telegram(msg):
