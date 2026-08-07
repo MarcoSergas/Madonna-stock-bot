@@ -34,6 +34,7 @@ PRODUCTS = [
         "name": "Cassette",
         "url": "https://www.groovespin.it/album/madonna-confessions-ii-4273809?releaseId=1099619.js",
         "link": "https://www.groovespin.it/album/madonna-confessions-ii-4273809?releaseId=1099619"
+    }
 ]
 
 def send_telegram(msg):
