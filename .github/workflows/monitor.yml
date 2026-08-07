@@ -1,8 +1,8 @@
+name: Monitor Madonna Store Stock
+
 on:
   schedule:
-    # Ogni 15 minuti ai minuti 7, 22, 37 e 52
     - cron: '7,22,37,52 * * * *'
-
   workflow_dispatch:
 
 jobs:
@@ -18,11 +18,8 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Aggiorna pip
-run: python -m pip install --upgrade pip        
-
       - name: Installa dipendenze
-        run: pip install -r requirements.txt
+        run: pip install requests
 
       - name: Esegui controllo disponibilità
         env:
