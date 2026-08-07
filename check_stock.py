@@ -29,11 +29,6 @@ PRODUCTS = [
         "name": "CD 16 tracce",
         "url": "https://shopeu.madonna.com/products/standard-cd-16-track.js",
         "link": "https://shopeu.madonna.com/products/standard-cd-16-track"
-    },
-    {
-        "name": "Premium CD 16 tracce",
-        "url": "https://shopeu.madonna.com/products/premium-cd-16-track.js",
-        "link": "https://shopeu.madonna.com/products/premium-cd-16-track"
     }
 ]
 
