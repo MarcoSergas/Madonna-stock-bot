@@ -4,6 +4,9 @@ import requests
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
+if not TELEGRAM_TOKEN or not CHAT_ID:
+    raise ValueError("TELEGRAM_TOKEN o TELEGRAM_CHAT_ID non configurati.")
+
 # Inserisci qui tutti i prodotti che vuoi monitorare
 PRODUCTS = [
     {
@@ -29,30 +32,45 @@ PRODUCTS = [
 ]
 
 def send_telegram(msg):
-    telegram_url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-    response = requests.post(telegram_url, json={
-        "chat_id": CHAT_ID,
-        "text": msg,
-        "parse_mode": "Markdown"
-    })
+    try:
+        telegram_url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+        response = requests.post(telegram_url, json={
+            "chat_id": CHAT_ID,
+            "text": msg,
+            "parse_mode": "Markdown"
+            },
+            timeout=10
+            )
     
-    if response.status_code == 200:
-        print("Notifica Telegram inviata con successo!")
-    else:
-        print(f"Errore Telegram ({response.status_code}): {response.text}")
+            if response.status_code == 200:
+                print("Notifica Telegram inviata con successo!")
+            else:
+                print(f"Errore Telegram ({response.status_code}): {response.text}")
+     except Exception as e:
+        print(f"Errore durante l'invio del messaggio Telegram: {e}")
 
 def check_stock():
+    print("====================================")
+    print("Monitor Madonna Store")
+    print("Avvio controllo disponibilità...")
+    print("====================================")
+
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     }
-    
+
     for item in PRODUCTS:
+        print(f"Controllo prodotto: {item['name']}")
+
         try:
             response = requests.get(item["url"], headers=headers, timeout=10)
+
+            print(f"[{item['name']}] Risposta HTTP: {response.status_code}")
+
             if response.status_code == 200:
                 data = response.json()
                 is_available = data.get("available", False)
-                
+
                 if is_available:
                     product_title = data.get("title", item["name"])
                     msg = (
@@ -65,8 +83,14 @@ def check_stock():
                     print(f"[{item['name']}] Prodotto ancora esaurito.")
             else:
                 print(f"[{item['name']}] Errore HTTP: Stato {response.status_code}")
+
         except Exception as e:
             print(f"[{item['name']}] Errore durante l'esecuzione: {e}")
+
+    print("====================================")
+    print("Controllo completato.")
+    print("====================================")
+
 
 if __name__ == "__main__":
     check_stock()
