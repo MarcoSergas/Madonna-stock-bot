@@ -24,6 +24,16 @@ PRODUCTS = [
         "name": "LP Pride Edition",
         "url": "https://shopeu.madonna.com/products/confessions-ii-d-12-track-vinyl-lp-pride-edition.js",
         "link": "https://shopeu.madonna.com/products/confessions-ii-d-12-track-vinyl-lp-pride-edition"
+    },
+    {
+        "name": "Bass Persuades Neon",
+        "url": "https://store.mileyofficial.com/en-eu/products/bass-persuades-neon-coral-vinyl-store-exclusive.js",
+        "link": "https://store.mileyofficial.com/en-eu/products/bass-persuades-neon-coral-vinyl-store-exclusive"
+    },
+    {
+        "name": "Bass Persuades Signed",
+        "url": "https://store.mileyofficial.com/products/bass-persuades-signed-black-vinyl.js",
+        "link": "https://store.mileyofficial.com/products/bass-persuades-signed-black-vinyl"
     }
 ]
 
