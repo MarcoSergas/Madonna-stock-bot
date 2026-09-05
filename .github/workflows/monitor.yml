@@ -3,6 +3,9 @@ name: Monitor Madonna Store Stock
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   check-stock:
     runs-on: ubuntu-latest
