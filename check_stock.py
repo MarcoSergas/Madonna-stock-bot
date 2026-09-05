@@ -1,6 +1,7 @@
 import os
 import requests
 import time
+import json
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
@@ -8,34 +9,62 @@ CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 if not TELEGRAM_TOKEN or not CHAT_ID:
     raise ValueError("TELEGRAM_TOKEN o TELEGRAM_CHAT_ID non configurati.")
 
-# Inserisci qui tutti i prodotti che vuoi monitorare
+STATE_FILE = "stock_state.json"
+
 PRODUCTS = [
     {
+        "id": "madonna_cassette",
         "name": "Cassette",
         "url": "https://shopeu.madonna.com/products/cassette.js",
         "link": "https://shopeu.madonna.com/products/cassette"
     },
     {
+        "id": "madonna_deluxe_2lp",
         "name": "Deluxe 2LP Set",
         "url": "https://shopeu.madonna.com/products/luxe-expanded-2lpe-epink.js",
         "link": "https://shopeu.madonna.com/products/luxe-expanded-2lpe-epink"
     },
     {
+        "id": "madonna_lp_pride",
         "name": "LP Pride Edition",
         "url": "https://shopeu.madonna.com/products/confessions-ii-d-12-track-vinyl-lp-pride-edition.js",
         "link": "https://shopeu.madonna.com/products/confessions-ii-d-12-track-vinyl-lp-pride-edition"
     },
     {
+        "id": "miley_bass_neon",
         "name": "Bass Persuades Neon",
         "url": "https://store.mileyofficial.com/en-eu/products/bass-persuades-neon-coral-vinyl-store-exclusive.js",
         "link": "https://store.mileyofficial.com/en-eu/products/bass-persuades-neon-coral-vinyl-store-exclusive"
     },
     {
+        "id": "miley_bass_signed",
+        "name": "Bass Persuades Ruby US",
+        "url": "https://store.mileyofficial.com/products/bass-persuades-ruby-vinyl-store-exclusive.js",
+        "link": "https://store.mileyofficial.com/products/bass-persuades-ruby-vinyl-store-exclusive"
+    },
+    {
+        "id": "miley_bass_ruby",
         "name": "Bass Persuades Ruby",
         "url": "https://store.mileyofficial.com/en-eu/products/bass-persuades-ruby-vinyl-store-exclusive.js",
         "link": "https://store.mileyofficial.com/en-eu/products/bass-persuades-ruby-vinyl-store-exclusive"
     }
 ]
+
+def load_state():
+    if os.path.exists(STATE_FILE):
+        try:
+            with open(STATE_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"Errore lettura stato: {e}")
+    return {}
+
+def save_state(state):
+    try:
+        with open(STATE_FILE, "w", encoding="utf-8") as f:
+            json.dump(state, f, indent=2)
+    except Exception as e:
+        print(f"Errore salvataggio stato: {e}")
 
 def send_telegram(msg):
     try:
@@ -49,7 +78,6 @@ def send_telegram(msg):
             },
             timeout=10
         )
-        
         if response.status_code == 200:
             print("Notifica Telegram inviata con successo!")
         else:
@@ -59,7 +87,7 @@ def send_telegram(msg):
 
 def check_stock():
     print("==========================================")
-    print("Monitor Madonna Store")
+    print("Monitor Store Stock")
     print("Avvio controllo disponibilità...")
     print("==========================================")
     
@@ -67,7 +95,11 @@ def check_stock():
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     }
     
+    previous_state = load_state()
+    current_state = dict(previous_state)
+    
     for item in PRODUCTS:
+        item_id = item["id"]
         print(f"Controllo prodotto: {item['name']}")
         try:
             response = requests.get(item["url"], headers=headers, timeout=10)
@@ -76,23 +108,40 @@ def check_stock():
             if response.status_code == 200:
                 data = response.json()
                 is_available = data.get("available", False)
+                was_available = previous_state.get(item_id, False)
                 
-                if is_available:
+                # Caso 1: Diventato disponibile (prima era False, ora è True)
+                if is_available and not was_available:
                     product_title = data.get("title", item["name"])
                     msg = (
-                        f"🚨 **PRODOTTO DISPONIBILE!** 🚨\n\n"
-                        f"Il prodotto **{product_title}** è disponibile!\n\n"
+                        f"🚨 **PRODOTTO TORNATO DISPONIBILE!** 🚨\n\n"
+                        f"Il prodotto **{product_title}** è ora disponibile!\n\n"
                         f"👉 Link acquisto: {item['link']}"
                     )
                     send_telegram(msg)
+                
+                # Caso 2: Diventato esaurito (prima era True, ora è False)
+                elif not is_available and was_available:
+                    product_title = data.get("title", item["name"])
+                    msg = (
+                        f"❌ **PRODOTTO DI NUOVO ESAURITO!** ❌\n\n"
+                        f"Il prodotto **{product_title}** è appena andato esaurito."
+                    )
+                    send_telegram(msg)
+                
                 else:
-                    print(f"[{item['name']}] Prodotto ancora esaurito.")
+                    status_str = "disponibile" if is_available else "esaurito"
+                    print(f"[{item['name']}] Nessun cambio di stato (ancora {status_str}).")
+                
+                current_state[item_id] = is_available
             else:
                 print(f"[{item['name']}] Errore HTTP: Stato {response.status_code}")
         except Exception as e:
             print(f"[{item['name']}] Errore durante l'esecuzione: {e}")
             
         time.sleep(1)
+
+    save_state(current_state)
 
     print("==========================================")
     print("Controllo completato.")
