@@ -31,11 +31,6 @@ PRODUCTS = [
         "link": "https://store.mileyofficial.com/en-eu/products/bass-persuades-neon-coral-vinyl-store-exclusive"
     },
     {
-        "name": "Bass Persuades Signed",
-        "url": "https://store.mileyofficial.com/products/bass-persuades-signed-black-vinyl.js",
-        "link": "https://store.mileyofficial.com/products/bass-persuades-signed-black-vinyl"
-    },
-    {
         "name": "Bass Persuades Ruby",
         "url": "https://store.mileyofficial.com/en-eu/products/bass-persuades-ruby-vinyl-store-exclusive.js",
         "link": "https://store.mileyofficial.com/en-eu/products/bass-persuades-ruby-vinyl-store-exclusive"
