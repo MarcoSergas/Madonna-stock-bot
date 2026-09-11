@@ -47,6 +47,12 @@ PRODUCTS = [
         "name": "Bass Persuades Ruby",
         "url": "https://store.mileyofficial.com/en-eu/products/bass-persuades-ruby-vinyl-store-exclusive.js",
         "link": "https://store.mileyofficial.com/en-eu/products/bass-persuades-ruby-vinyl-store-exclusive"
+    },
+    {
+        "id": "Beyonce Deluxe",
+        "name": "Bass Persuades Ruby",
+        "url": "https://beyonce.com/shop/products/b-day-20th-anniversary-deluxe-edition-vinyl.js",
+        "link": "https://beyonce.com/shop/products/b-day-20th-anniversary-deluxe-edition-vinyl"
     }
 ]
 
