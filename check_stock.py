@@ -55,7 +55,13 @@ PRODUCTS = [
         "link": "store.mileyofficial.com/en-eu/products/bass-persuades-pomegranate-vinyl-store-exclusive"
     },
     {
-        "id": "Beyonce Deluxe",
+        "id": "playboy_charli",
+        "name": "Playboy Charli XCX",
+        "url": "https://www.yourcelebritymagazines.com/en-it/products/playboy-magazine-fall-2026-charli-xcx.js",
+        "link": "https://www.yourcelebritymagazines.com/en-it/products/playboy-magazine-fall-2026-charli-xcx"
+    },
+    {
+        "id": "Beyonce_Deluxe",
         "name": "beyonce_deluxe",
         "url": "https://beyonce.com/shop/products/b-day-20th-anniversary-deluxe-edition-vinyl.js",
         "link": "https://beyonce.com/shop/products/b-day-20th-anniversary-deluxe-edition-vinyl"
