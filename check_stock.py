@@ -55,10 +55,10 @@ PRODUCTS = [
         "link": "store.mileyofficial.com/en-eu/products/bass-persuades-pomegranate-vinyl-store-exclusive"
     },
     {
-        "id": "playboy_charli",
-        "name": "Playboy Charli XCX",
-        "url": "https://www.yourcelebritymagazines.com/en-it/products/playboy-magazine-fall-2026-charli-xcx.js",
-        "link": "https://www.yourcelebritymagazines.com/en-it/products/playboy-magazine-fall-2026-charli-xcx"
+        "id": "danceteria",
+        "name": "danceteria",
+        "url": "https://shopeu.madonna.com/products/madonna-charli-d-danceteria-cassette.js",
+        "link": "https://shopeu.madonna.com/products/madonna-charli-d-danceteria-cassette"
     },
     {
         "id": "Beyonce_Deluxe",
