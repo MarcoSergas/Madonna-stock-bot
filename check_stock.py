@@ -47,12 +47,6 @@ PRODUCTS = [
         "name": "danceteria",
         "url": "https://shopeu.madonna.com/products/madonna-charli-d-danceteria-cassette.js",
         "link": "https://shopeu.madonna.com/products/madonna-charli-d-danceteria-cassette"
-    },
-    {
-        "id": "Beyonce_Deluxe",
-        "name": "beyonce_deluxe",
-        "url": "https://beyonce.com/shop/products/b-day-20th-anniversary-deluxe-edition-vinyl.js",
-        "link": "https://beyonce.com/shop/products/b-day-20th-anniversary-deluxe-edition-vinyl"
     }
 ]
 
