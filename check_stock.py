@@ -49,12 +49,6 @@ PRODUCTS = [
         "link": "https://store.mileyofficial.com/en-eu/products/bass-persuades-ruby-vinyl-store-exclusive"
     },
     {
-        "id": "miley_bass_pomegranate",
-        "name": "Bass Persuades Pomegranate",
-        "url": "store.mileyofficial.com/en-eu/products/bass-persuades-pomegranate-vinyl-store-exclusive.js",
-        "link": "store.mileyofficial.com/en-eu/products/bass-persuades-pomegranate-vinyl-store-exclusive"
-    },
-    {
         "id": "danceteria",
         "name": "danceteria",
         "url": "https://shopeu.madonna.com/products/madonna-charli-d-danceteria-cassette.js",
